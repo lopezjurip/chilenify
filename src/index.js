@@ -1,44 +1,48 @@
 'use strict';
 
-export default function chilenify(aString) {
-  aString = aString.toLowerCase();
-  aString = aString.replace(/hola/gi,"wena");
-  aString = aString.replace(/mujer/gi,"bellaka");
-  aString = aString.replace(/hombre/gi,"bellako");
-  aString = aString.replace(/mina/gi,"washa");
-  aString = aString.replace(/minitas/gi,"washitas");
-  aString = aString.replace(/bakan/gi,"del korte");
-  aString = aString.replace(/bacan/gi,"del korte");
-  aString = aString.replace(/bkn/gi,"del korte");
-  aString = aString.replace(/arregla/gi,"azicala");
-  aString = aString.replace(/fino/gi,"fino y elegante");
-  aString = aString.replace(/bailar/gi,"perrear");
-  aString = aString.replace(/beso/gi,"kiss");
-  aString = aString.replace(/besito/gi,"lanwetazo");
-  aString = aString.replace(/compadre/gi,"socio");
-  aString = aString.replace(/en serio/gi,"la pulenta");
-  aString = aString.replace(/en serio/gi,"la pulenta");
-  aString = aString.replace(/cacha /gi,"sapea ");
-  aString = aString.replace(/buena /gi,"wena ");
-  aString = aString.replace(/destacado/gi,"connotado");
-  aString = aString.replace(/script/gi,"scrip");
-  var perv = true;
-  if (perv) aString = aString.toUpperCase();
-  else aString = aString.toLowerCase();
-  var last = aString.length;
-  var result = "";
-  var vowels = new Array('A','E','I','O','U');
-  for (var i = 0; i<last; i++) {
+const vowels = ['A','E','I','O','U'];
+
+const matches = [
+  [/hola/gi, 'wena'],
+  [/mujer/gi, 'bellaka'],
+  [/hombre/gi, 'bellako'],
+  [/mina/gi, 'washa'],
+  [/minitas/gi, 'washitas'],
+  [/bakan/gi, 'del korte'],
+  [/bacan/gi, 'del korte'],
+  [/bkn/gi, 'del korte'],
+  [/arregla/gi, 'azicala'],
+  [/fino/gi, 'fino y elegante'],
+  [/bailar/gi, 'perrear'],
+  [/beso/gi, 'kiss'],
+  [/besito/gi, 'lanwetazo'],
+  [/compadre/gi, 'socio'],
+  [/en serio/gi, 'la pulenta'],
+  [/en serio/gi, 'la pulenta'],
+  [/cacha /gi, 'sapea '],
+  [/buena /gi, 'wena '],
+  [/destacado/gi, 'connotado'],
+  [/script/gi, 'scrip'],
+];
+
+export default function chilenify(string, { perv } = { perv: false }) {
+  string = matches.reduce(
+    (current, [key, val]) => current.replace(key, val),
+    string.toLowerCase() // intitial
+  );
+
+  if (perv) string = string.toUpperCase();
+  else string = string.toLowerCase();
+
+  let result = string.split().reduce((char, current) => {
     if (perv) {
-      var isVowel = false;
-      for(let e in vowels){
-            if(vowels[e] == aString.charAt(i)) isVowel = true;
-      }
-      if (isVowel) result += flChar(aString.charAt(i).toLowerCase());
-      else result += flChar(aString.charAt(i));
+      const isVowel = vowels.includes(char);
+      if (isVowel) return current += prettyChar(char.toLowerCase(), perv);
+      else return current += prettyChar(char, perv);
     }
-    else result += flChar(aString.charAt(i));
-  }
+    return current += prettyChar(char, perv);
+  }, '');
+
   if (result.length > 10) {
     if (!perv) result += ' \xF3\xE8z\xED\xED';
     else result += ' m\xE1Zn\xE1\xE1t\xE8d\xED\xEDgh\xF3 \xF3\xE8z\xED\xED';
@@ -46,46 +50,37 @@ export default function chilenify(aString) {
   return result;
 }
 
-function flChar(c) {
-  if (c == 'a') {
-    return '\xE1\xE1';
+function prettyChar(char ,perv) {
+  switch (char) {
+    case 'a':
+      return '\xE1\xE1';
+    case 'e':
+      return '\xE8';
+    case 'i':
+      return '\xED\xED\xED';
+    case 'o':
+      return '\xF3';
+    case 'u':
+      return '\xFA\xFA';
+    case 'A':
+        return '\xC0';
+    case 'E':
+        return '\xC8';
+    case 'I':
+        return '\xCD\xCD\xCD';
+    case 'O':
+        return '\xD3';
+    case 'U':
+        return '\xDA';
+    default: {
+      if (perv) {
+        if (char == 'S' || char == 's') return 'z';
+        else if (char == 'H' || char == 'h') return '';
+        else if (char == 'R' || char == 'r') return 'r';
+        else if (char == 'V' || char == 'v') return 'b';
+        else if (char == 'B' || char == 'b') return 'v';
+      }
+      return char;
+    }
   }
-  else if (c == 'e') {
-    return '\xE8';
-  }
-  else if (c == 'i') {
-    return '\xED\xED\xED';
-  }
-  else if (c == 'o') {
-    return '\xF3';
-  }
-  else if (c == 'u') {
-    return '\xFA\xFA';
-  }
-  /* Soporte para mayusculas
-  else if (c == 'A') {
-    return '\xC0';
-  }
-  else if (c == 'E') {
-    return '\xC8';
-  }
-  else if (c == 'I') {
-    return '\xCD\xCD\xCD';
-  }
-  else if (c == 'O') {
-    return '\xD3';
-  }
-  else if (c == 'U') {
-    return '\xDA';
-  }
-  */
-  var perv = true;
-  if (perv) {
-    if (c=='S'||c=='s') return 'z';
-    else if (c=='H'||c=='h') return '';
-    else if (c=='R'||c=='r') return 'r';
-    else if (c=='V'||c=='v') return 'b';
-    else if (c=='B'||c=='b') return 'v';
-  }
-  return c;
 }

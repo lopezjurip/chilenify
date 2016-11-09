@@ -2,7 +2,15 @@ import { expect } from 'chai';
 import chilenify from '../src';
 
 describe('add', () => {
-  it('should add 2 and 2', () => {
-    return chilenify('Hola que tal');
+  it('perv works', () => {
+    const result = chilenify('Hola que tal compadre', { perv: true });
+    console.log(result);
+    return result
+  });
+
+  it('perv works disabled', () => {
+    const result = chilenify('Hola que tal compadre', { perv: false });
+    console.log(result);
+    return result
   });
 });

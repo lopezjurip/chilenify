@@ -1,3 +1,10 @@
-import { add } from '../lib';
+'use strict';
 
-console.log('2 + 2', '=', add(2, 2));
+import chilenify from '../lib';
+
+// ES5
+// const chilenify = require('chilenify').default;
+
+const sentence = chilenify('Hola que tal compadre', { perv: true });
+
+console.log(sentence);

@@ -1,6 +1,6 @@
 {
   "name": "chilenify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert to chilean spanish",
   "main": "lib/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "url": "https://github.com/mrpatiwi/chilenify.git"
   },
   "keywords": [
-
+    "chile"
   ],
   "author": "Patricio López",
   "license": "MIT",

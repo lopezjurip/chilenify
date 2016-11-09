@@ -1,4 +1,6 @@
+# Output
 lib
+dist
 
 lib-cov
 *.seed
